@@ -1,8 +1,60 @@
 <?php
-session_start();
+// sessione:
+// session_start();
+// var_dump($_SESSION);
+
+//? input lunghezza password:
+$password_length = intval($_GET['password-length']);
+//// var_dump($password_length);
+
+//? variabili:
+$alpha = 'abcdefghijklmnopqrstuvwxyz';
+$num = '0123456789';
+$simbol= '@!?#$';
+
+//? array alfanumerico:
+$alpha_num_array = genAlphaNumArray($alpha, $num, $simbol);
+//// var_dump($alpha_num_array);
+
+//? password generata:
+$password = genPassword($password_length, $alpha_num_array);
+echo $password;
 
 
+//* funzione principale per generare password:
+function genPassword($length, $characters) {
 
+    $length_char = count($characters);
+    $random_password = '';
+
+    for($i=0; $i<$length; $i++) {
+        $character = '';
+        $character .= $characters[rand(0, $length_char - 1)];
+        // creo maiuscole random:
+        if (!is_numeric($character) && rand(0, 1) === 1) {
+            $character = strtoupper($character);
+        }
+        $random_password .= $character;
+    }
+
+    return $random_password;
+};
+
+//* funzione per creare array di lettere, numeri e simboli:
+function genAlphaNumArray($alpha, $num, $simbol) {
+    $list = [];
+    // ciclo lettere, numeri e simboli:
+    for ($i=0; $i < strlen($alpha) ; $i++) { 
+       $list[] = $alpha[$i]; 
+    };
+    for ($i=0; $i < strlen($num) ; $i++) { 
+       $list[] = $num[$i]; 
+    };
+    for ($i=0; $i < strlen($simbol) ; $i++) { 
+       $list[] = $simbol[$i]; 
+    };
+    return $list;
+};
 
 
 ?>
