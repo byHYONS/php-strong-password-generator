@@ -1,7 +1,7 @@
 <?php
 
 if (isset($_GET['password-length'])) {
-    $password_length = intval($_GET['password-length']);
+    $password_length = intval($_GET['password-length']) ? $_GET['password-length'] : 8;
     $password = generatePassword($password_length);
     header("Location: index.php?password=" . urlencode($password));
     exit();
